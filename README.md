@@ -1,5 +1,3 @@
-# Zodata: OData Endpoint Discovery & Testing Tool
-
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <!-- Assuming MIT, adjust if needed -->
 
@@ -23,6 +21,18 @@ It parses OData `$metadata` XML to automatically generate a list of possible req
 *   **405 Method Not Allowed Handling:** If a GET request returns a 405, Zodata checks the `Allow` header and attempts to re-send the request with allowed methods (e.g., POST).
 *   **Replay Filtering (`-frs`):** Allows excluding certain URLs (based on status codes from previous runs) from being sent through the proxy during subsequent runs, useful for focusing on new or problematic endpoints.
 *   **Colored Console Output:** Provides clear, color-coded feedback for request execution.
+
+## Why Not Just Use OData Explorer (Burp Plugin) (or similar tools)?
+- While GUI tools and plugins like PortSwigger's "OData Explorer" for Burp Suite are excellent for quick visual exploration and interaction with OData services, Zodata was born out of a specific need encountered during bug bounty hunting.
+- I came across an OData $metadata endpoint that served an XML file with almost 300,000 characters (check image below). Many browser-based extensions, and even some dedicated tools or plugins, can struggle significantly or outright fail to parse and handle such a large metadata document due to memory constraints or processing limitations inherent in their environment.
+- Faced with this challenge, I needed a robust and efficient way to quickly parse this massive metadata file and identify potential endpoints for testing. Zodata was rapidly developed as a command-line solution precisely to address this scenario. Its Python-based backend, focused on direct XML parsing (using xml.dom.minidom) and streamlined processing, allows it to handle very large metadata files effectively where other tools might falter or become unresponsive.
+
+<table>
+  <tr>
+    <td style="padding: 5px;"><img src="https://github.com/user-attachments/assets/abde0849-b0f6-44a1-80d7-798ba0991794" alt="Image showing tool struggling with large file" width="500"/></td>
+    <td style="padding: 5px;"><img src="https://github.com/user-attachments/assets/f60c70f5-ab2c-47a5-b32a-e40980059547" alt="Image showing large metadata file" width="500"/></td>
+  </tr>
+</table>
 
 ## Prerequisites
 
